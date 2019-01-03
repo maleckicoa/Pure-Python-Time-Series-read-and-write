@@ -7,7 +7,7 @@ from collections import OrderedDict
        odict = OrderedDict({'Time':datetime.strptime('2019-01-04 00:49:10','%Y-%m-%d %H:%M:%S'), 'Price':3500}) 
        
        ######################################################## reading csv and transforming to ordered dictionary in python 
-        with open(example_csv.csv) as infile:
+        with open(example_csv.csv) as infile:                # file is attached in the repository
             csvReader = csv.reader(infile)      
             header = next(csvReader)  # get rid of header row
             odict_csv = OrderedDict()
