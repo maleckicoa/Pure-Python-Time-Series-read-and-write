@@ -1,27 +1,30 @@
-        ##################################################################################### reading csv and transforming to odict        
-        
-        with open(file(curr,inte)) as infile:
+import csv
+from datetime import datetime
+from collections import OrderedDict
+      
+       ######################################################## create an ordered dictionary
+       
+       odict = OrderedDict({'Time':datetime.strptime('2019-01-04 00:49:10','%Y-%m-%d %H:%M:%S'), 'Price':3500}) 
+       
+       ######################################################## reading csv and transforming to ordered dictionary in python 
+        with open(example_csv.csv) as infile:
             csvReader = csv.reader(infile)      
             header = next(csvReader)  # get rid of header row
             odict_csv = OrderedDict()
             for row in csvReader:
                 odict_csv[row[0]] = row[1]
-       
-        
-     
+           
         odict_csv = OrderedDict({datetime.strptime(k,'%Y-%m-%d %H:%M:%S'):v for k,v in odict_csv.items()}) # converting date key to date
         odict_csv = OrderedDict(sorted(odict_csv.items(), key=lambda x: x[0], reverse=False))              # sorting based on date
         
-
-        #################################################################################### joining two odicts and writing a new csv 
+        ###################################################### joining two ordered dictionary objects 
         odict_csv_join=odict_csv
-        odict_csv_join.update(odict)                                                                # joining
-   
+        odict_csv_join.update(odict)                          # joining odict_csv and odict, duplicate keys are removed 
         odict_csv_join =OrderedDict({datetime.strftime(k,'%Y-%m-%d %H:%M:%S'):v for k,v in odict_csv_join.items()}) # converting date key to string
         odict_csv_join = OrderedDict(sorted(odict_csv_join.items(), key=lambda x: datetime.strptime(x[0],'%Y-%m-%d %H:%M:%S'), reverse=False))  # sorting based on date
         
-        
-        f = open(file(curr,inte), mode='w')                            # writing the csv
+        ###################################################### # writing the new csv
+        f = open(example_csv.csv, mode='w')                            
         columnTitleRow = "Time, Price\n"
         f.write(columnTitleRow)
         for key, value in odict_csv_join.items():
